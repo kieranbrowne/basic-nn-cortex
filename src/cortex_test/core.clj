@@ -21,14 +21,14 @@
 ;; describe linear network
 (def network-description
   [(layers/input num-features 1 1 :id :data)
-   (layers/linear->tanh 4 :bias (repeatedly 4 rand))
-   (layers/linear->tanh 1 :id :label)
+   (layers/linear->tanh 4)
+   (layers/linear 1 :id :label)
    ])
 
 ;; run untrained network
 (execute/run
   (network/linear-network network-description)
-  (create-dataset))
+  dataset)
 
 
 ;; train network
@@ -39,6 +39,8 @@
    dataset ;test-ds
    :optimizer (sgd/sgd :learning-rate 0.01)
    :batch-size 4
+   :epoch-count 300
+   :simple-loss-print? true
    ))
 
 
